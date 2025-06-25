@@ -63,6 +63,15 @@ npm run build
 
 ---
 
+## You can also install the published package directly via npm:
+
+```bash
+npm install mcp-typebot
+npm start
+```
+
+---
+
 ## Running
 
 ```bash

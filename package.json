@@ -1,8 +1,11 @@
 {
   "name": "mcp-typebot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "mcp-typebot": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js"
