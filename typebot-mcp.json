@@ -1,0 +1,18 @@
+{
+  "mcp": {
+    "name": "Typebot Manager MCP",
+    "description": "Gestiona tus Typebots desde Claude",
+    "endpoint": "http://localhost:3000/invoke",
+    "tools": [
+      { "id": "authenticate", "description": "Configura tu token de Typebot" },
+      { "id": "createBot",     "description": "Crea un nuevo Typebot" },
+      { "id": "listBots",      "description": "Lista todos los Typebots" },
+      { "id": "getBot",        "description": "Recupera un Typebot por ID" },
+      { "id": "updateBot",     "description": "Actualiza un Typebot existente" },
+      { "id": "publishBot",    "description": "Publica un Typebot" },
+      { "id": "unpublishBot",  "description": "Despublica un Typebot" },
+      { "id": "deleteBot",     "description": "Elimina un Typebot" },
+      { "id": "listResults",   "description": "Lista resultados de un Typebot con paginación" }
+    ]
+  }
+}
