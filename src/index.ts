@@ -24,7 +24,7 @@ import {
 
 async function main() {
   const server = new McpServer({
-    name: 'mcp-typebot',
+    name: 'typebot-mcp',
     version: '1.0.0',
   });
 
@@ -57,7 +57,7 @@ async function main() {
       description: 'Update an existing Typebot (e.g., change name)',
       schema: z.object({
         botId:     z.string().min(1, "The 'botId' field is required."),
-        typebot:   z.record(z.any()).refine(x => typeof x === 'object', "The 'typebot' field is required."),
+        typebot:   z.record(z.any()).refine((x: any) => typeof x === 'object', "The 'typebot' field is required."),
         overwrite: z.boolean().optional(),
       }),
     }],

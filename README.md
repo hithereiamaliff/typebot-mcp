@@ -1,6 +1,6 @@
 # Typebot MCP Server
 
-[![smithery badge](https://smithery.ai/badge/@hithereiamaliff/mcp-typebot)](https://smithery.ai/server/@hithereiamaliff/mcp-typebot)
+[![smithery badge](https://smithery.ai/badge/@hithereiamaliff/typebot-mcp)](https://smithery.ai/server/@hithereiamaliff/typebot-mcp)
 
 A small MCP server that exposes Typebot’s REST API as callable tools in Claude Desktop (via STDIO).
 You can create, list, get, update, delete, publish/unpublish Typebots, list results, and start chats—using natural-language commands.
@@ -60,7 +60,7 @@ You can create, list, get, update, delete, publish/unpublish Typebots, list resu
 
 ```bash
 git clone <repo-url>
-cd mcp-typebot
+cd typebot-mcp
 npm install
 npm run build
 ```
@@ -76,7 +76,7 @@ npm start
 
 You can easily install this MCP server through Smithery:
 
-1. Visit [https://smithery.ai/server/@hithereiamaliff/mcp-typebot](https://smithery.ai/server/@hithereiamaliff/mcp-typebot)
+1. Visit [https://smithery.ai/server/@hithereiamaliff/typebot-mcp](https://smithery.ai/server/@hithereiamaliff/typebot-mcp)
 2. Follow the installation instructions on the Smithery page
 3. Configure your environment variables as described in the Deployment Options section
 
@@ -132,7 +132,7 @@ To connect Claude Desktop to this MCP server locally, add the following to your 
 ```json
 {
   "mcpServers": {
-    "mcp-typebot": {
+    "typebot-mcp": {
       "command": "node",
       "args": [
         "path/to/project/dist/index.js"

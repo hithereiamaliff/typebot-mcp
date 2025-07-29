@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "mcp-typebot": {
+    "typebot-mcp": {
       "command": "node",
       "args": [
         "./dist/index.js"
