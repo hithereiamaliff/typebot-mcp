@@ -1,0 +1,28 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config
+
+startCommand:
+  type: stdio
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({ command: 'node', args: ['dist/index.js'], env: { TYPEBOT_TOKEN: config.typebotToken, TYPEBOT_API_URL: config.typebotApiUrl, TYPEBOT_WORKSPACE_ID: config.typebotWorkspaceId || '' } })
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - typebotToken
+      - typebotApiUrl
+    properties:
+      typebotToken:
+        type: string
+        description: Typebot API token
+      typebotApiUrl:
+        type: string
+        description: Typebot API base URL
+      typebotWorkspaceId:
+        type: string
+        description: Typebot workspace ID
+  exampleConfig:
+    typebotToken: your_typebot_token_here
+    typebotApiUrl: https://api.typebot.io/api/v1
+    typebotWorkspaceId: your_workspace_id_here
