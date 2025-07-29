@@ -1,7 +1,5 @@
 # Typebot MCP Server
 
-[![smithery badge](https://smithery.ai/badge/@hithereiamaliff/mcp-typebot)](https://smithery.ai/server/@hithereiamaliff/mcp-typebot)
-
 A small MCP server that exposes Typebot’s REST API as callable tools in Claude Desktop (via STDIO).
 You can create, list, get, update, delete, publish/unpublish Typebots, list results, and start chats—using natural-language commands.
 
