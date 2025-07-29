@@ -1,10 +1,10 @@
 {
-  "name": "mcp-typebot",
+  "name": "typebot-mcp",
   "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "bin": {
-    "mcp-typebot": "dist/index.js"
+    "typebot-mcp": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -12,19 +12,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/osdeibi/MCP-typebot.git"
+    "url": ""
   },
   "keywords": [
     "typebot",
     "chatbot",
     "open source"
   ],
-  "author": "Osdeibi Acurero",
+  "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/osdeibi/MCP-typebot/issues"
+    "url": ""
   },
-  "homepage": "https://github.com/osdeibi/MCP-typebot#readme",
+  "homepage": "",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.13.1",
     "axios": "^1.10.0",

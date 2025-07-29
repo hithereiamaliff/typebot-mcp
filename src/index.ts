@@ -35,52 +35,52 @@ async function main() {
   }>([
     ['createBot', {
       func: createBot,
-      description: 'Crea un nuevo Typebot. Requiere “name”, opcional “description”',
+      description: 'Create a new Typebot. Requires "name", optional "description"',
       schema: z.object({
         workspaceId: z.string().optional(),
-        name:        z.string().min(1, "El campo 'name' es obligatorio."),
+        name:        z.string().min(1, "The 'name' field is required."),
         description: z.string().optional(),
       }),
     }],
     ['listBots', {
       func: listBots,
-      description: 'Lista todos los Typebots de un workspace',
+      description: 'List all Typebots in a workspace',
       schema: z.object({ workspaceId: z.string().optional() }),
     }],
     ['getBot', {
       func: getBot,
-      description: 'Recupera un Typebot por su ID',
+      description: 'Get a Typebot by its ID',
       schema: z.object({ botId: z.string().min(1, "El campo 'botId' es obligatorio.") }),
     }],
     ['updateBot', {
       func: updateBot,
-      description: 'Actualiza un Typebot existente (p.ej. cambia nombre)',
+      description: 'Update an existing Typebot (e.g., change name)',
       schema: z.object({
-        botId:     z.string().min(1, "El campo 'botId' es obligatorio."),
-        typebot:   z.record(z.any()).refine(x => typeof x === 'object', "El campo 'typebot' es obligatorio."),
+        botId:     z.string().min(1, "The 'botId' field is required."),
+        typebot:   z.record(z.any()).refine(x => typeof x === 'object', "The 'typebot' field is required."),
         overwrite: z.boolean().optional(),
       }),
     }],
     ['deleteBot', {
       func: deleteBot,
-      description: 'Elimina un Typebot por su ID',
+      description: 'Delete a Typebot by its ID',
       schema: z.object({ botId: z.string().min(1, "El campo 'botId' es obligatorio.") }),
     }],
     ['publishBot', {
       func: publishBot,
-      description: 'Publica un Typebot existente',
+      description: 'Publish an existing Typebot',
       schema: z.object({ botId: z.string().min(1, "El campo 'botId' es obligatorio.") }),
     }],
     ['unpublishBot', {
       func: unpublishBot,
-      description: 'Despublica un Typebot existente',
+      description: 'Unpublish an existing Typebot',
       schema: z.object({ botId: z.string().min(1, "El campo 'botId' es obligatorio.") }),
     }],
     ['listResults', {
       func: listResults,
-      description: 'Lista resultados de un Typebot',
+      description: 'List results of a Typebot',
       schema: z.object({
-        botId:      z.string().min(1, "El campo 'botId' es obligatorio."),
+        botId:      z.string().min(1, "The 'botId' field is required."),
         limit:      z.number().int().min(1).max(100).optional(),
         cursor:     z.string().optional(),
         timeFilter: z.string().optional(),
@@ -89,9 +89,9 @@ async function main() {
     }],
     ['startChat', {
       func: startChat,
-      description: 'Inicia un chat con un Typebot. Requiere botId, opcional chat.context',
+      description: 'Start a chat with a Typebot. Requires botId, optional chat.context',
       schema: z.object({
-        botId: z.string().min(1, "El campo 'botId' es obligatorio."),
+        botId: z.string().min(1, "The 'botId' field is required."),
         chat: z.object({
           context: z.record(z.any()).optional(),
         }).optional(),
@@ -118,7 +118,7 @@ async function main() {
           return {
             content: [{
               type: 'text' as const,
-              text: `Error de validación en ${name}: ${parsed.error.message}`
+              text: `Validation error in ${name}: ${parsed.error.message}`
             }]
           };
         }
@@ -135,7 +135,7 @@ async function main() {
           return {
             content: [{
               type: 'text' as const,
-              text: `Error en ${name}: ${e.message}`
+              text: `Error in ${name}: ${e.message}`
             }]
           };
         }
@@ -148,6 +148,6 @@ async function main() {
 }
 
 main().catch(err => {
-  console.error('Error al arrancar MCP server:', err);
+  console.error('Error starting MCP server:', err);
   process.exit(1);
 });

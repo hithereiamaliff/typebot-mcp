@@ -1,4 +1,6 @@
-# MCP-Typebot
+# Typebot MCP Server
+
+[![smithery badge](https://smithery.ai/badge/@hithereiamaliff/mcp-typebot)](https://smithery.ai/server/@hithereiamaliff/mcp-typebot)
 
 A small MCP server that exposes Typebot’s REST API as callable tools in Claude Desktop (via STDIO).
 You can create, list, get, update, delete, publish/unpublish Typebots, list results, and start chats—using natural-language commands.
@@ -54,6 +56,8 @@ You can create, list, get, update, delete, publish/unpublish Typebots, list resu
 
 ## Installation
 
+### Option 1: Clone the repository
+
 ```bash
 git clone <repo-url>
 cd mcp-typebot
@@ -61,14 +65,20 @@ npm install
 npm run build
 ```
 
----
-
-## You can also install the published package directly via npm:
+### Option 2: Install via npm
 
 ```bash
-npm install mcp-typebot
+npm install typebot-mcp
 npm start
 ```
+
+### Option 3: Install via Smithery
+
+You can easily install this MCP server through Smithery:
+
+1. Visit [https://smithery.ai/server/@hithereiamaliff/mcp-typebot](https://smithery.ai/server/@hithereiamaliff/mcp-typebot)
+2. Follow the installation instructions on the Smithery page
+3. Configure your environment variables as described in the Deployment Options section
 
 ---
 
@@ -77,8 +87,6 @@ npm start
 ```bash
 npm start
 ```
-
-This starts the MCP server on STDIO. Claude Desktop (or any MCP client) will connect to it automatically.
 
 ---
 
@@ -115,15 +123,11 @@ You can also start a chat:
 
 ---
 
-## License
+## Deployment Options
 
+### Local Configuration (Claude Desktop)
 
-
----
-
-## Configuring Claude Desktop
-
-To connect Claude Desktop to this MCP server, add the following to your Claude configuration (e.g. `claude_desktop_config.json`):
+To connect Claude Desktop to this MCP server locally, add the following to your Claude configuration (e.g. `claude_desktop_config.json`):
 
 ```json
 {
@@ -135,11 +139,45 @@ To connect Claude Desktop to this MCP server, add the following to your Claude c
       ],
       "env": {
         "TYPEBOT_TOKEN": "YOUR_TOKEN_HERE",
-        "TYPEBOT_WORKSPACE_ID": "YOUR_WORKSPACE_ID"
+        "TYPEBOT_WORKSPACE_ID": "YOUR_WORKSPACE_ID",
+        "TYPEBOT_API_URL": "YOUR_TYPEBOT_API_URL"
       }
     }
   }
 }
 ```
 
-Make sure the `command` and `args` point to your local built `index.js`, and that your `.env` values match those in `env`.
+Make sure the `command` and `args` point to your local built `index.js`, and that your environment variables are correctly set.
+
+### Smithery Deployment
+
+To deploy this MCP server on Smithery:
+
+1. Push your code to a GitHub repository
+2. Log into your Smithery account
+3. Create a new deployment and connect it to your GitHub repository
+4. Configure the following environment variables in Smithery:
+   - `TYPEBOT_TOKEN`: Your Typebot API token
+   - `TYPEBOT_WORKSPACE_ID`: Your Typebot workspace ID
+   - `TYPEBOT_API_URL`: The URL to your Typebot API (e.g., https://your-typebot-instance.com/api/v1)
+5. Deploy the application
+6. Use the provided URL to connect Claude to your MCP server
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgements
+
+This project is a direct fork of [osdeibi's MCP-typebot](https://github.com/osdeibi/MCP-typebot). It builds upon the original work with the following improvements:
+
+- **Configurable API URL**: Added support for custom Typebot API endpoints via the `TYPEBOT_API_URL` environment variable instead of hardcoded URLs
+- **Improved Error Handling**: Enhanced error messages and validation in English
+- **Better Configuration**: More flexible configuration options for different Typebot instances
+- **Code Quality**: Various code improvements and optimizations
+
+This starts the MCP server on STDIO. Claude Desktop (or any MCP client) will connect to it automatically.

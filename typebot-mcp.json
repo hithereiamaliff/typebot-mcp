@@ -3,11 +3,12 @@
     "mcp-typebot": {
       "command": "node",
       "args": [
-        "your route to /dist/index.js"
+        "./dist/index.js"
       ],
       "env": {
         "TYPEBOT_TOKEN": "YOUR_TOKEN",
-        "TYPEBOT_WORKSPACE_ID": "YOUR_WORKSPACE_ID"
+        "TYPEBOT_WORKSPACE_ID": "YOUR_WORKSPACE_ID",
+        "TYPEBOT_API_URL": "YOUR_TYPEBOT_API_URL"
       }
     }
   }

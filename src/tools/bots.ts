@@ -1,10 +1,18 @@
 import axios from 'axios';
 
+// Get API base URL from environment variable
+const getApiBaseUrl = () => {
+  if (!process.env.TYPEBOT_API_URL) {
+    throw new Error('TYPEBOT_API_URL environment variable is not set');
+  }
+  return process.env.TYPEBOT_API_URL;
+};
+
 function ensureAuth() {
   const header = axios.defaults.headers.common['Authorization'];
   if (!header) {
     throw new Error(
-      'No hay token configurado. Llama primero a authenticate o define TYPEBOT_TOKEN.'
+      'No token configured. Call authenticate first or define TYPEBOT_TOKEN.'
     );
   }
 }
@@ -21,7 +29,7 @@ export async function createBot(args: CreateBotArgs) {
     args.workspaceId || process.env.TYPEBOT_WORKSPACE_ID;
   if (!workspaceId) {
     throw new Error(
-      'createBot: falta workspaceId (ni en args ni en process.env)'
+      'createBot: missing workspaceId (neither in args nor in process.env)'
     );
   }
 
@@ -33,8 +41,9 @@ export async function createBot(args: CreateBotArgs) {
     },
   };
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.post(
-    'https://app.typebot.io/api/v1/typebots',
+    `${apiBaseUrl}/typebots`,
     payload
   );
   return response.data;
@@ -50,12 +59,13 @@ export async function listBots(args: ListBotsArgs = {}) {
     args.workspaceId || process.env.TYPEBOT_WORKSPACE_ID;
   if (!workspaceId) {
     throw new Error(
-      'listBots: falta workspaceId (ni en args ni en process.env)'
+      'listBots: missing workspaceId (neither in args nor in process.env)'
     );
   }
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.get(
-    'https://app.typebot.io/api/v1/typebots',
+    `${apiBaseUrl}/typebots`,
     { params: { workspaceId } }
   );
   return response.data;
@@ -68,10 +78,11 @@ export interface GetBotArgs {
 export async function getBot(args: GetBotArgs) {
   ensureAuth(); 
   const { botId } = args;
-  if (!botId) throw new Error('getBot: falta botId');
+  if (!botId) throw new Error('getBot: missing botId');
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.get(
-    `https://app.typebot.io/api/v1/typebots/${botId}`
+    `${apiBaseUrl}/typebots/${botId}`
   );
   return response.data;
 }
@@ -86,20 +97,21 @@ export async function updateBot(args: UpdateBotArgs) {
   ensureAuth();
 
   const { botId, typebot: changes, overwrite = false } = args;
-  if (!botId) throw new Error('updateBot: falta botId');
+  if (!botId) throw new Error('updateBot: missing botId');
   if (typeof changes !== 'object' || Object.keys(changes).length === 0) {
     throw new Error(
-      'updateBot: el objeto `typebot` con campos a cambiar es obligatorio'
+      'updateBot: the `typebot` object with fields to change is required'
     );
   }
 
+  const apiBaseUrl = getApiBaseUrl();
   const getRes = await axios.get<{ typebot: { version: string } }>(
-    `https://app.typebot.io/api/v1/typebots/${botId}`
+    `${apiBaseUrl}/typebots/${botId}`
   );
   const version = getRes.data.typebot.version;
   if (!version) {
     throw new Error(
-      'updateBot: no pude obtener la versión actual del Typebot'
+      'updateBot: could not get the current version of the Typebot'
     );
   }
 
@@ -114,7 +126,7 @@ export async function updateBot(args: UpdateBotArgs) {
   }
 
   const patchRes = await axios.patch(
-    `https://app.typebot.io/api/v1/typebots/${botId}`,
+    `${apiBaseUrl}/typebots/${botId}`,
     payload
   );
   return patchRes.data;
@@ -127,10 +139,11 @@ export interface DeleteBotArgs {
 export async function deleteBot(args: DeleteBotArgs) {
   ensureAuth(); 
   const { botId } = args;
-  if (!botId) throw new Error('deleteBot: falta botId');
+  if (!botId) throw new Error('deleteBot: missing botId');
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.delete(
-    `https://app.typebot.io/api/v1/typebots/${botId}`
+    `${apiBaseUrl}/typebots/${botId}`
   );
   return response.data;
 }
@@ -142,10 +155,11 @@ export interface PublishBotArgs {
 export async function publishBot(args: PublishBotArgs) {
   ensureAuth(); 
   const { botId } = args;
-  if (!botId) throw new Error('publishBot: falta botId');
+  if (!botId) throw new Error('publishBot: missing botId');
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.post(
-    `https://app.typebot.io/api/v1/typebots/${botId}/publish`,
+    `${apiBaseUrl}/typebots/${botId}/publish`,
     {}
   );
   return response.data;
@@ -158,10 +172,11 @@ export interface UnpublishBotArgs {
 export async function unpublishBot(args: UnpublishBotArgs) {
   ensureAuth();  
   const { botId } = args;
-  if (!botId) throw new Error('unpublishBot: falta botId');
+  if (!botId) throw new Error('unpublishBot: missing botId');
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.post(
-    `https://app.typebot.io/api/v1/typebots/${botId}/unpublish`,
+    `${apiBaseUrl}/typebots/${botId}/unpublish`,
     {}
   );
   return response.data;
@@ -192,17 +207,18 @@ export async function listResults(args: ListResultsArgs) {
     timeZone,
   } = args;
 
-  if (!botId) throw new Error('listResults: falta botId');
+  if (!botId) throw new Error('listResults: missing botId');
   if (limit < 1 || limit > 100) {
-    throw new Error('listResults: limit debe estar entre 1 y 100');
+    throw new Error('listResults: limit must be between 1 and 100');
   }
 
   const params: Record<string, any> = { limit, timeFilter };
   if (cursor) params.cursor = cursor;
   if (timeZone) params.timeZone = timeZone;
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.get(
-    `https://app.typebot.io/api/v1/typebots/${botId}/results`,
+    `${apiBaseUrl}/typebots/${botId}/results`,
     { params }
   );
   return response.data;
@@ -219,13 +235,14 @@ export async function startChat(args: StartChatArgs) {
   ensureAuth();
 
   const { botId, chat } = args;
-  if (!botId) throw new Error('startChat: falta botId');
+  if (!botId) throw new Error('startChat: missing botId');
 
   const payload: Record<string, any> = {};
   if (chat) payload.chat = chat;
 
+  const apiBaseUrl = getApiBaseUrl();
   const response = await axios.post(
-    `https://app.typebot.io/api/v1/typebots/${botId}/chat/start`,
+    `${apiBaseUrl}/typebots/${botId}/chat/start`,
     payload
   );
   return response.data;
