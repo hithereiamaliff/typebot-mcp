@@ -2,7 +2,7 @@
 
 [![smithery badge](https://smithery.ai/badge/@hithereiamaliff/typebot-mcp)](https://smithery.ai/server/@hithereiamaliff/typebot-mcp)
 
-A small MCP server that exposes Typebot’s REST API as callable tools in Claude Desktop (via STDIO).
+A small MCP server that exposes Typebot's REST API as callable tools in Claude Desktop and other MCP clients (via Streamable HTTP transport).
 You can create, list, get, update, delete, publish/unpublish Typebots, list results, and start chats—using natural-language commands.
 
 ---
@@ -52,6 +52,7 @@ You can create, list, get, update, delete, publish/unpublish Typebots, list resu
 1. **Node.js 18+**  
 2. A valid **Typebot API token** and **workspace ID**  
 3. Claude Desktop connected to your local MCP server
+
 ---
 
 ## Installation
@@ -69,7 +70,9 @@ npm run build
 
 ```bash
 npm install typebot-mcp
-npm start
+npm run dev # for development
+# or
+npm run build # for production build
 ```
 
 ### Option 3: Install via Smithery
@@ -84,9 +87,21 @@ You can easily install this MCP server through Smithery:
 
 ## Running
 
+### Development Mode
+
 ```bash
-npm start
+npm run dev
 ```
+
+This will start the server in development mode with hot reloading using Smithery CLI.
+
+### Production Build
+
+```bash
+npm run build
+```
+
+This will create a production build using Smithery CLI.
 
 ---
 
@@ -127,27 +142,13 @@ You can also start a chat:
 
 ### Local Configuration (Claude Desktop)
 
-To connect Claude Desktop to this MCP server locally, add the following to your Claude configuration (e.g. `claude_desktop_config.json`):
+To connect Claude Desktop to this MCP server locally, you can run it in development mode and use the HTTP URL:
 
-```json
-{
-  "mcpServers": {
-    "typebot-mcp": {
-      "command": "node",
-      "args": [
-        "path/to/project/dist/index.js"
-      ],
-      "env": {
-        "TYPEBOT_TOKEN": "YOUR_TOKEN_HERE",
-        "TYPEBOT_WORKSPACE_ID": "YOUR_WORKSPACE_ID",
-        "TYPEBOT_API_URL": "YOUR_TYPEBOT_API_URL"
-      }
-    }
-  }
-}
+```bash
+npm run dev
 ```
 
-Make sure the `command` and `args` point to your local built `index.js`, and that your environment variables are correctly set.
+This will start the server on http://localhost:8181 by default. You can then add this URL to your Claude Desktop configuration.
 
 ### Smithery Deployment
 
@@ -180,4 +181,13 @@ This project is a direct fork of [osdeibi's MCP-typebot](https://github.com/osde
 - **Better Configuration**: More flexible configuration options for different Typebot instances
 - **Code Quality**: Various code improvements and optimizations
 
-This starts the MCP server on STDIO. Claude Desktop (or any MCP client) will connect to it automatically.
+## Migration from STDIO to HTTP Transport
+
+This MCP server has been migrated from the deprecated STDIO transport to the recommended Streamable HTTP transport using the Smithery CLI. This migration provides several benefits:
+
+- **Better Scalability**: HTTP transport allows for multiple concurrent connections
+- **Improved Reliability**: Avoids issues with process management and IPC
+- **Enhanced Monitoring**: Better logging and debugging capabilities
+- **Future Compatibility**: Ensures compatibility with future MCP clients and standards
+
+The migration was completed before the September 7, 2025 deadline set by Smithery for discontinuing STDIO transport support.

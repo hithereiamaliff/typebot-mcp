@@ -1,0 +1,19 @@
+# Smithery configuration file: https://smithery.ai/docs/build/project-config/smithery-yaml
+runtime: "typescript"
+startCommand:
+  type: "http"
+  # JSON Schema defining the configuration options for the MCP.
+  configSchema:
+    TYPEBOT_API_URL:
+      description: "API URL for Typebot"
+      type: "string"
+    TYPEBOT_TOKEN:
+      description: "API token for Typebot"
+      type: "string"
+    TYPEBOT_WORKSPACE_ID:
+      description: "Default workspace ID for Typebot"
+      type: "string"
+  exampleConfig:
+    TYPEBOT_API_URL: "https://api.typebot.io"
+    TYPEBOT_TOKEN: "your-api-token"
+    TYPEBOT_WORKSPACE_ID: "your-workspace-id"

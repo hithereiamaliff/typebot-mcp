@@ -2,12 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import axios from 'axios';
-if (process.env.TYPEBOT_TOKEN) {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.TYPEBOT_TOKEN}`;
-}
-
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z, ZodObject, ZodRawShape } from "zod";
 
 import {
@@ -22,10 +17,31 @@ import {
   startChat,
 } from './tools/bots';
 
-async function main() {
+// Configuration schema for smithery.yaml
+export const configSchema = z.object({
+  TYPEBOT_TOKEN: z.string().describe("API token for Typebot"),
+  TYPEBOT_WORKSPACE_ID: z.string().describe("Default workspace ID for Typebot"),
+  TYPEBOT_API_URL: z.string().describe("API URL for Typebot")
+});
+
+export default function createServer({
+  config,
+}: {
+  config: z.infer<typeof configSchema>;
+}) {
+  // Set up axios with the token from config
+  if (config.TYPEBOT_TOKEN) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${config.TYPEBOT_TOKEN}`;
+  }
+  
+  // Set environment variables for compatibility with existing code
+  process.env.TYPEBOT_TOKEN = config.TYPEBOT_TOKEN;
+  process.env.TYPEBOT_WORKSPACE_ID = config.TYPEBOT_WORKSPACE_ID;
+  process.env.TYPEBOT_API_URL = config.TYPEBOT_API_URL;
+
   const server = new McpServer({
     name: 'typebot-mcp',
-    version: '1.0.0',
+    version: '1.0.3',
   });
 
   const toolsMap = new Map<string, {
@@ -143,11 +159,5 @@ async function main() {
     );
   }
 
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
+  return server.server;
 }
-
-main().catch(err => {
-  console.error('Error starting MCP server:', err);
-  process.exit(1);
-});
