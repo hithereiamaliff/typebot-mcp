@@ -160,7 +160,7 @@ To deploy this MCP server on Smithery:
 4. Configure the following environment variables in Smithery:
    - `TYPEBOT_TOKEN`: Your Typebot API token
    - `TYPEBOT_WORKSPACE_ID`: Your Typebot workspace ID
-   - `TYPEBOT_API_URL`: The URL to your Typebot API (e.g., https://your-typebot-instance.com/api/v1)
+   - `TYPEBOT_API_URL`: The full URL to your Typebot API including the /api/v1 path (e.g., https://your-typebot-domain.com/api/v1)
 5. Deploy the application
 6. Use the provided URL to connect Claude to your MCP server
 

@@ -5,7 +5,7 @@ startCommand:
   # JSON Schema defining the configuration options for the MCP.
   configSchema:
     TYPEBOT_API_URL:
-      description: "API URL for Typebot"
+      description: "Full API URL for your Typebot instance including /api/v1 path (e.g., https://your-typebot-domain.com/api/v1)"
       type: "string"
     TYPEBOT_TOKEN:
       description: "API token for Typebot"
@@ -14,6 +14,8 @@ startCommand:
       description: "Default workspace ID for Typebot"
       type: "string"
   exampleConfig:
-    TYPEBOT_API_URL: "https://api.typebot.io"
+    # Must include full URL with protocol and path to API v1
+    # Replace with your self-hosted or custom Typebot domain
+    TYPEBOT_API_URL: "https://your-typebot-domain.com/api/v1"
     TYPEBOT_TOKEN: "your-api-token"
     TYPEBOT_WORKSPACE_ID: "your-workspace-id"
